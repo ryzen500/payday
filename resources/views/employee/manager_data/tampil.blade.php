@@ -126,7 +126,7 @@
                     <select type="text" class="selectpicker form-control designation"   
                     data-designation_name="designation_name"
                      id="status_user" name="status_user">
-                      @if($employee->status_user == null ||$employee->status_user == 0)
+                      @if($employee->status_user == null ||$employee->status_user == 1)
                       <option value="--">--</option>
                       @foreach($pegawai as $pegawais)
                       <option value="{{$pegawais->id}}">{{$pegawais->first_name}}</option>
