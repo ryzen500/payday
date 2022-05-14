@@ -94,7 +94,7 @@
                                 <input type="text" 
                                               placeholder="Total Denda"
                                               id="total"
-                                              value="{{$datas->overtime_amount}}"
+                                              
                                                       required class="form-control">
                             </div>
 
@@ -153,6 +153,7 @@
 
 </section>
 <script>
+
     function formatRupiah(angka, prefix)
 	{
 		var number_string = angka.replace(/[^,\d]/g, '').toString(),
@@ -170,9 +171,20 @@
 		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
        $(document).ready(function() {
+
+        
+        $(".overtime_edit").keyup(function() {
+            var harga  = $("#overtime_rate").val();
+            var jumlah = $("#overtime_hours").val();
+
+            var total = parseInt(harga) * parseInt(jumlah);
+            var lalas ='{{config('variable.currency')}} ' + formatRupiah('Rp' + total);
+            $("#total").val(lalas);
+        });
+            
         $("#overtime_rate, #overtime_hours").keyup(function() {
             var harga  = $("#overtime_rate").val();
-            var jumlah = $("#overtime_rate").val();
+            var jumlah = $("#overtime_hours").val();
 
             var total = parseInt(harga) * parseInt(jumlah);
             var lalas ='{{config('variable.currency')}} ' + formatRupiah('Rp' + total);

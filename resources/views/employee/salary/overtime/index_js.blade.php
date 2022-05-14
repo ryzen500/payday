@@ -192,6 +192,8 @@
                 $('#overtime_title').val(html.data.overtime_title);
                 $('#no_of_days').val(html.data.no_of_days);
                 $('#overtime_rate').val(html.data.overtime_rate);
+                $('#total').val(html.data.overtime_amount);
+
                 $('#calculate_leave').selectpicker('val', html.data.calculate_leave)
 
                 $('#overtime_hidden_id').val(html.data.id);
