@@ -431,7 +431,7 @@ class EmployeeController extends Controller {
 						{
 							// $button = '<button type="button" name="edit" id="' . $data->id . '" class="employees_edit btn btn-primary btn-sm"><i class="dripicons-pencil"></i></button>';
 							// $button .= '&nbsp;&nbsp;';
-							$button = '<button type="button" name="tombol-hapus" href="" id="tombol-hapus" class="employees btn btn-danger btn-sm"><i class="dripicons-trash"></i></button>';
+							$button = '<button type="button" name="tombols" href="" id="tombols" class="employees btn btn-danger btn-sm"><i class="dripicons-trash"></i></button>';
 
 							return $button;
 						} else

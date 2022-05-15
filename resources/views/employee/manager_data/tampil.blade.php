@@ -324,26 +324,23 @@
         </div>
       </div>
 
-
-      <div class="modal fade" id="konfirmasi-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modal-judul"></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                <span aria-hidden="true">&times;</span>
-              </button>
+      <div class="modal fade confirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">{{trans('file.Confirmation')}}</h2>
+                    <button type="button" class="bank-close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" style="margin:0;">{{__('Are you sure you want to remove this data?')}}</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="tombol-hapus" id="tombol-hapus"  class="btn btn-danger bank-ok">{{trans('file.OK')}}</button>
+                    <button type="button" class="bank-close btn-default" data-dismiss="modal">{{trans('file.Cancel')}}</button>
+                </div>
             </div>
-            <div class="modal-body">
-            
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Hapus</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
   </section>
   <script>
@@ -451,9 +448,16 @@
         //     }
         //   })
         // })
+        $(document).on('click', '#tombols', function (){
+          $('.confirmModal').modal('show');
+        $('.modal-title').text('{{__('DELETE Record')}}');
+        $('.bank-ok').text('{{trans('file.OK')}}');
+        })
 
           $(document).on('click', '#tombol-hapus', function () {
+
             console.log($('#status_user').val());
+
 
             console.log('TOmbol hapus sudah di tekan')
             $.ajax({
@@ -463,7 +467,7 @@
             type:"post",
             dataType:'json',
             beforeSend : function (){
-              $('#tombol-hapus').text('Hapus Data');
+              $('#tombol-hapus').text('Ok');
             },
             success : function (data) {
               setTimeout(function () {
@@ -471,7 +475,7 @@
                 var oTable = $('#manager-table').dataTable();
                 oTable.fnDraw(false);
                 console.log('data Berhasil dihapus');
-
+                  location.reload();
               });
             }
           })
