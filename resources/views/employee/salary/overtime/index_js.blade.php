@@ -1,4 +1,23 @@
-    $('#overtime-table').DataTable().clear().destroy();
+
+    function formatRupiah(angka, prefix)
+	{
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split	= number_string.split(','),
+			sisa 	= split[0].length % 3,
+			rupiah 	= split[0].substr(0, sisa),
+			ribuan 	= split[0].substr(sisa).match(/\d{3}/gi);
+			
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+		
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+	}
+
+
+$('#overtime-table').DataTable().clear().destroy();
 
     var table_table = $('#overtime-table').DataTable({
         initComplete: function () {
@@ -51,17 +70,33 @@
                 data: 'overtime_hours',
                 name: 'overtime_hours'
             },
+
+            
+
+            
             {
                 data: 'overtime_rate',
                 name: 'overtime_rate',
     render: function (data) {
     if ('{{config('variable.currency_format') =='suffix'}}') {
-    return data + ' {{config('variable.currency')}}';
+    return data + formatRupiah(data + ' {{config('variable.currency')}}');
     } else {
-    return '{{config('variable.currency')}} ' + data;
+    return '{{config('variable.currency')}} ' +  formatRupiah('{{config('variable.currency')}} ' + data);
 
     }
     }
+            },
+            {
+                data: 'overtime_amount',
+                name: 'overtime_amount',
+                render: function (data) {
+                    if ('{{config('variable.currency_format') =='suffix'}}') {
+                    return data +  formatRupiah(data + ' {{config('variable.currency')}}');
+                    } else {
+                    return '{{config('variable.currency')}} ' +  formatRupiah('{{config('variable.currency')}} ' + data);
+                
+                    }
+                    }
             },
             {
                 data: 'action',

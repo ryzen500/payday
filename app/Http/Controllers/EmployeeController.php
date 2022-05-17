@@ -357,7 +357,7 @@ class EmployeeController extends Controller {
 
 			foreach($salary_overtimes as $salary_overtime) {
 				$total += $salary_overtime->overtime_amount;
-				array_push($salary_detils, (object) array('salary' => 'Other Payment', 'title' => $salary_overtime->overtime_title, 'amount' => 'Rp. '. number_format($salary_overtime->overtime_amount,0,',','.')));
+				array_push($salary_detils, (object) array('salary' => 'Salary Overtime', 'title' => $salary_overtime->overtime_title, 'amount' => 'Rp. '. number_format($salary_overtime->overtime_amount,0,',','.')));
 			}	
 			
 			array_push($salary_detils, (object) array('salary' => '', 'title' => 'Total :', 'amount' => 'Rp. '. number_format($total, 0, ',', '.')));

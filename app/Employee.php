@@ -52,6 +52,12 @@ class Employee extends Model
 		return $this->belongsTo(self::class,'status_user');
 	}
 
+	public function employeeOvertime(){
+		// return $this->belongsTo('App\EmployeeBankAccount','employee_id');
+		return $this->hasMany(Payslip::class);
+
+	}
+
 	public function employeeBankAccount(){
 		// return $this->belongsTo('App\EmployeeBankAccount','employee_id');
 		return $this->hasMany(employeeBankAccount::class);

@@ -24,6 +24,8 @@
                     @else
                         <th>({{config('variable.currency')}}) {{__('Rate')}}</th>
                     @endif
+                    <th>{{__('Total Amount')}}</th>
+
                     <th class="not-exported">{{trans('file.action')}}</th>
                 </tr>
                 </thead>
@@ -81,7 +83,7 @@
                                 <input type="text" name="overtime_rate" id="overtime_rate"
                                               placeholder={{trans('file.Rate')}}
                                               value="10000"
-                                                      required class="form-control">
+                                                      required class="form-control" readonly>
                             </div>
 
 

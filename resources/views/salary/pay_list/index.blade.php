@@ -72,6 +72,7 @@
                     <th>Loan</th>
                     <th>Other Payments</th>
                     <th>Nomer Rekening</th>
+                    <th>Salary Overtime</th>
                     <th>{{__('Total')}}</th>
                     <th>{{trans('file.Status')}}</th>
                     <th class="not-exported">{{trans('file.action')}}</th>
@@ -554,6 +555,21 @@ function formatRupiah(angka, prefix)
                                 name: 'account_number'
                             },
 
+                            {
+                                data:'overtime_amount',
+                                name:'overtime_amount',
+                                render:function (data) {
+                                    if ('{{config('variable.currency_format') =='suffix'}}') {
+                                        // return data + ' {{config('variable.currency')}}';
+                                        return formatRupiah(data + ' {{config('variable.currency')}}');
+
+                                    } else {
+                                        // return '{{config('variable.currency')}} ' + data;
+                                        return '{{config('variable.currency')}}'+ formatRupiah('{{config('variable.currency')}}' + data);
+
+                                    }  
+                                }
+                            },
                             {
                                 data: 'net_salary',
                                 name: 'net_salary',

@@ -291,7 +291,21 @@ class PayrollController extends Controller {
                         }
 						return 'Rp. '.$other_amount;
 					})
-					->addColumn('net_salary', function ($row)  use ($first_date)
+				
+					->addColumn('overtime_amount', function ($row)
+					{
+						foreach($row->overtimes as $lalas){
+							$overtime_amount = $lalas['overtime_amount'];
+							// return $lalas['overtime_amount'];
+						
+						 return	$overtime_amount;
+
+						}
+
+						// return $row->employeeOvertime;
+
+					})
+						->addColumn('net_salary', function ($row)  use ($first_date)
 					{
 						//payslip_type & basic_salary
 						foreach ($row->salaryBasic as $salaryBasic) {

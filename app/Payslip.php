@@ -24,6 +24,10 @@ class Payslip extends Model
 		return $this->belongsTo('App\Employee','employee_id','id');
 	}
 
+	
+	public function employeeOvertime(){
+		return $this->hasOne('App\SalaryOvertime','employee_id','employee_id');
+	}
 
 	public function employeeBankAccount(){
 		return $this->hasOne('App\EmployeeBankAccount','employee_id','employee_id');
