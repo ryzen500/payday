@@ -309,6 +309,9 @@ class EmployeeController extends Controller {
 
 			$allowance_salary = DB::table('salary_allowances')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->groupBy('first_date')
+
 						->get();
 			foreach($allowance_salary as $allowance_salarys) {
 				$total += $allowance_salarys->allowance_amount;
@@ -317,6 +320,9 @@ class EmployeeController extends Controller {
 
 			$salary_commissions = DB::table('salary_commissions')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->groupBy('first_date')
+
 						->get();
 
 			foreach($salary_commissions as $salary_commission) {
@@ -326,6 +332,9 @@ class EmployeeController extends Controller {
 
 			$salary_deductions = DB::table('salary_deductions')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->groupBy('first_date')
+
 						->get();
 
 			foreach($salary_deductions as $salary_deduction) {
@@ -335,6 +344,9 @@ class EmployeeController extends Controller {
 			
 			$salary_loans = DB::table('salary_loans')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->groupBy('first_date')
+
 						->get();
 
 			foreach($salary_loans as $salary_loan) {
@@ -344,6 +356,9 @@ class EmployeeController extends Controller {
 
 			$salary_other_payments = DB::table('salary_other_payments')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->groupBy('first_date')
+
 						->get();
 			
 			foreach($salary_other_payments as $salary_other_payment) {
@@ -351,9 +366,15 @@ class EmployeeController extends Controller {
 				array_push($salary_detils, (object) array('salary' => 'Other Payment', 'title' => $salary_other_payment->other_payment_title, 'amount' => 'Rp. '. number_format($salary_other_payment->other_payment_amount,0,',','.')));
 			}
 
+			$dates ='ya';
 			$salary_overtimes = DB::table('salary_overtimes')
 						->where('employee_id', $employee->id)
+						->where('first_date','=',date('Y-m-01'))
+						->where('calculate_leave',$dates)
+						->groupBy('first_date')
 						->get();
+
+				// dd($salary_overtimes);
 
 			foreach($salary_overtimes as $salary_overtime) {
 				$total += $salary_overtime->overtime_amount;

@@ -102,17 +102,18 @@
 
 
                             <div class="col-md-6 form-group">
-                                <label>{{__('Calculate leave')}} ?</label>          
+                                {{-- <label>{{__('Calculate leave')}} ?</label>           --}}
                                 <!-- <select name="calculate_leave" id="calculate_leave_allowance"
                                         class="form-control selectpicker">
                                     <option value="1">{{trans('file.Ya')}}</option>
                                     <option value="0">{{trans('file.Tidak')}}</option>
                                 </select> -->
-                                <select name="calculate_leave" id="calculate_leave"
+                                <input type="hidden" name="calculate_leave" id="calculate_leave" value="ya">
+                                {{-- <select name="calculate_leave" id="calculate_leave"
                                     class="selectpicker form-control">
                                 <option value="ya">{{trans('ya')}}</option>
                                 <option value="tidak">{{trans(' tidak')}}</option>
-                                </select>
+                                </select> --}}
                             </div>
 
                             <div class="container">
