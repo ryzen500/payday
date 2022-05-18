@@ -16,6 +16,12 @@ class company extends Model
 			->where('is_publish','=',1);
 	}
 
+	
+	public function employee(){
+		return $this->hasMany('App\Employee','employee_id','id');
+	}
+
+
 	public function Location(){
 		return $this->hasOne('App\location','id','location_id');
 	}

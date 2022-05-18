@@ -85,7 +85,7 @@ class PayrollController extends Controller {
 						},
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
-						}, 'employeeBankAccount'])
+						}, 'employeeBankAccount','department'])
 						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount')
 						->where('company_id', $request->filter_company)
 						->where('department_id', $request->filter_department)
@@ -130,8 +130,8 @@ class PayrollController extends Controller {
 						},
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
-						}, 'employeeBankAccount'])
-						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount')
+						}, 'employeeBankAccount','department'])
+						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount','department_id')
 						->where('company_id', $request->filter_company)
 						->whereIn('id',$salary_basic_employees)
 						->whereNotIn('id',$paid_employees)
@@ -174,8 +174,8 @@ class PayrollController extends Controller {
 						},
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
-						} , 'employeeBankAccount'])
-						->select('id', 'first_name', 'last_name', 'nik','basic_salary', 'payslip_type','pension_type','pension_amount')
+						} , 'employeeBankAccount','department'])
+						->select('id', 'first_name', 'last_name', 'nik','basic_salary', 'payslip_type','pension_type','pension_amount','department_id')
                         ->whereIn('id',$salary_basic_employees)
 						->whereNotIn('id',$paid_employees)
 						// ->where('id',9)
@@ -303,6 +303,19 @@ class PayrollController extends Controller {
 						}
 
 						// return $row->employeeOvertime;
+
+					})
+					->addColumn('department_name', function ($row)
+					{
+						foreach($row->department as $departmentss){
+							// $department_name = $departmentss['department_name'];
+							// return $departmentss['department_name'];
+						
+							// return $department_name;
+
+						}
+
+						return $row->department->department_name;
 
 					})
 						->addColumn('net_salary', function ($row)  use ($first_date)

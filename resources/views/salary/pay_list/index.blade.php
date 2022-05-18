@@ -73,7 +73,10 @@
                     <th>Other Payments</th>
                     <th>Nomer Rekening</th>
                     <th>Salary Overtime</th>
+
                     <th>{{__('Total')}}</th>
+                    <th>Department</th>
+
                     <th>{{trans('file.Status')}}</th>
                     <th class="not-exported">{{trans('file.action')}}</th>
                 </tr>
@@ -584,6 +587,10 @@ function formatRupiah(angka, prefix)
 
                                     }
                                 }
+                            },
+                            {
+                                data:'department_name',
+                                name:'department_name'
                             },
                             {
                                 data: 'status',
