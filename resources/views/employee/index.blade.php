@@ -16,8 +16,9 @@
                 <button type="button" class="btn btn-danger" name="bulk_delete" id="bulk_delete"><i
                             class="fa fa-minus-circle"></i> {{__('Bulk delete')}}</button>
 
-                <button type="button" class="btn btn-info" name="set_leave" id="set_leave"><i
-                                class="fa fa-plus"></i> {{__('Update Cuti Pegawai')}}</button>
+                <button type="button" class="btn btn-info" name="set_leave" id="set_leave">
+                    <i
+                                class="dripicons-user-group"></i> {{__('Cuti Pegawai')}}</button>
             @endcan
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 <i class="fa fa-filter" aria-hidden="true"></i> Filter
@@ -553,6 +554,24 @@
             $('#ok_button').text('{{trans('file.OK')}}');
 
         });
+
+        $(document).on('click', '#set_leave',function (){
+            let target ='{{route('pegawai_cuti')}}';
+            $.ajax({
+                url:target,
+                method:'POST',
+                columns:[
+                    {data:'total_leave',name:'total_leave'},
+                    {data:'remaining_leave',name:'remaining_leave'},
+            ],
+            success:function(data) {
+                console.log('Berhasil')
+
+                setTimeout(function () { document.location.reload(true); }, 2000);
+
+            }
+            })
+        })
 
 
         $(document).on('click', '#bulk_delete', function () {

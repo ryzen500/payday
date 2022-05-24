@@ -170,18 +170,24 @@ class EmployeeController extends Controller {
 		->select(DB::raw('YEAR(joining_date) as dates'))
 		->get();
 
-		// foreach ($pegawai_libur as $lalas) {
-		// 	# code...
-		// 	$cutis = $lalas->dates;
+		$value=12;
+		foreach ($pegawai_libur as $lalas) {
+			# code...
+			$cutis = $lalas->dates;
 
-		// }
+			if ($cutis < date('Y')) {
+				# code...
+				$employee_cuti = DB::table('employees')
+				->update(['total_leave'=> DB::raw($value),'remaining_leave'=> DB::raw($value)]);
+			}
+		}
 
 		// var_dump($pegawai_libur);
-		if ($pegawai_libur[0]->dates < date('Y')) {
-			# code...
-			return $pegawai_libur;
+		// if ($pegawai_libur[0]->dates < date('Y')) {
+		// 	# code...
+		// 	return $pegawai_libur;
 
-		}
+		// }
 
 	}
 

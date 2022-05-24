@@ -138,7 +138,14 @@ class PayrollController extends Controller {
 						->get();
 				} else
 				{
-					$employees = Employee::with(
+					$pegawai_libur =DB::table('employees')
+			
+			->select(DB::raw('YEAR(joining_date) as dates'))
+			->get();
+			
+					
+			
+			$employees = Employee::with(
 						['salaryBasic' => function ($query)
 						{
 							$query->orderByRaw('DATE_FORMAT(first_date, "%y-%m")');
@@ -175,9 +182,10 @@ class PayrollController extends Controller {
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
 						} , 'employeeBankAccount','department'])
-						->select('id', 'first_name', 'last_name', 'nik','basic_salary', 'payslip_type','pension_type','pension_amount','department_id')
+						->select('id', 'first_name', 'last_name', 'nik','basic_salary', 'payslip_type','pension_type','pension_amount','department_id','joining_date')
                         ->whereIn('id',$salary_basic_employees)
 						->whereNotIn('id',$paid_employees)
+						->whereYear('joining_date', '<', date('Y'))
 						// ->where('id',9)
 						->get();
 				}
