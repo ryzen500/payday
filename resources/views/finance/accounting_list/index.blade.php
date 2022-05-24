@@ -74,6 +74,7 @@
                                 @endif
                                 <input type="text" name="initial_balance" id="initial_balance" required
                                        class="form-control"
+                                       onclick="initialBalance()"
                                        placeholder="{{__('Initial Balance')}}">
                             </div>
 
@@ -136,6 +137,36 @@
     </div>
 
     <script type="text/javascript">
+
+        function initialBalance(){
+            var tester =formatRupiah('Rp ' + $('#initial_balance').val());
+            console.log(tester);
+
+            // return tester;
+        }
+
+
+        function myFunction(){
+            document.getElementById('#initial_balance');
+        }
+
+function formatRupiah(angka, prefix)
+	{
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split	= number_string.split(','),
+			sisa 	= split[0].length % 3,
+			rupiah 	= split[0].substr(0, sisa),
+			ribuan 	= split[0].substr(sisa).match(/\d{3}/gi);
+			
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+		
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+	}
+
         (function($) { 
             "use strict";
 
@@ -199,9 +230,9 @@
                             name: 'account_balance',
                             render: function (data) {
                                 if ('{{config('variable.currency_format') =='suffix'}}') {
-                                    return data + ' {{config('variable.currency')}}';
+                                    return formatRupiah(data + ' {{config('variable.currency')}}');
                                 } else {
-                                    return '{{config('variable.currency')}} ' + data;
+                                    return  '{{config('variable.currency')}} '  + formatRupiah('{{config('variable.currency')}} ' + data);
 
                                 }
                             }

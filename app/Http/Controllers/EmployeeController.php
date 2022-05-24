@@ -162,6 +162,28 @@ class EmployeeController extends Controller {
 
 	}
 
+	public function updatesCuti(Request $request)
+	{
+		$pegawai =Employee::all();
+		$pegawai_libur =DB::table('employees')
+			
+		->select(DB::raw('YEAR(joining_date) as dates'))
+		->get();
+
+		// foreach ($pegawai_libur as $lalas) {
+		// 	# code...
+		// 	$cutis = $lalas->dates;
+
+		// }
+
+		// var_dump($pegawai_libur);
+		if ($pegawai_libur[0]->dates < date('Y')) {
+			# code...
+			return $pegawai_libur;
+
+		}
+
+	}
 
 
 	public function create()
@@ -220,6 +242,12 @@ class EmployeeController extends Controller {
 				$data['contact_no'] = $request->contact_no;
 				$data['attendance_type'] = $request->attendance_type; //new
 				$data['joining_date']    = $request->joining_date; //new
+				// $data['remaining_leave']    = $request->joining_date; //new
+
+				$data['remaining_leave']    = 12; //new
+
+				$data['total_leave']    = 12; //new
+
 				$data['is_active'] = 1;
 
 
@@ -411,8 +439,18 @@ class EmployeeController extends Controller {
 
 			$pegawai = Employee::all();
 
+			$pegawai_libur =DB::table('employees')
+			
+			->select(DB::raw('YEAR(joining_date) as dates'))
+			->where('id',$employee->id)
+			->first();
+			
+
+			// var_dump($pegawai_libur);
+
+
 			return view('employee.dashboard', compact('employee', 'countries', 'companies',
-				'departments', 'designations', 'statuses', 'office_shifts', 'document_types', 'education_levels', 'pegawai','language_skills', 'general_skills','roles', 'salary_detils','employess'));
+				'departments', 'designations', 'statuses', 'office_shifts', 'document_types', 'education_levels', 'pegawai','language_skills', 'general_skills','roles', 'salary_detils','employess','pegawai_libur'));
 		}else
 		{
 			return response()->json(['success' => __('You are not authorized')]);
@@ -632,6 +670,7 @@ class EmployeeController extends Controller {
 				$employee_leave_info = Employee::find($employee);
 				if ($employee_leave_info->total_leave==0) {
 					$data['total_leave'] = $request->total_leave;
+					
 					$data['remaining_leave'] = $request->total_leave;
 				}
 				elseif ($request->total_leave > $employee_leave_info->total_leave) {

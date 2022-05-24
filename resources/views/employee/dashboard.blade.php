@@ -452,13 +452,36 @@
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
+
+                                                        
                                                         <label>{{__('Total Annual Leave')}}  (Year - {{date('Y')}})</label>
+                                                        @if($pegawai_libur->dates < date('Y'))
+
                                                         <input type="number" min="0" name="total_leave" id="total_leave" autocomplete="off" class="form-control" value="{{$employee->total_leave}}">
+                                                        @endif
+                                                        {{-- {{ $pegawai_libur->dates}} --}}
+                                                        @if($pegawai_libur->dates == date('Y'))
+
+                                                        <input type="number" min="0" name="total_leave" id="total_leave" autocomplete="off" class="form-control" value="0">
+                                                        
+                                                        @endif
+                                                        
+
                                                     </div>
                                                     <div class="col-md-4 form-group">
+
+                                                        @if($pegawai_libur->dates < date('Y'))
                                                         <label>{{__('Remaining Leave')}}  (Year - {{date('Y')}})</label>
                                                         <input type="number" readonly name="remaining_leave" id="remaining_leave" autocomplete="off" class="form-control" value="{{$employee->remaining_leave}}">
                                                         <small class="text-danger"><i>(Read Only)</i></small>
+                                                        @endif
+
+                                                        @if($pegawai_libur->dates == date('Y'))
+                                                        <label>{{__('Remaining Leave')}}  (Year - {{date('Y')}})</label>
+                                                        <input type="number" readonly name="remaining_leave" id="remaining_leave" autocomplete="off" class="form-control" value="0">
+                                                        <small class="text-danger"><i>(Read Only)</i></small>
+                                                        @endif
+
                                                     </div>
 
 {{-- 

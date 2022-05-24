@@ -15,6 +15,9 @@
             @can('modify-details-employee')
                 <button type="button" class="btn btn-danger" name="bulk_delete" id="bulk_delete"><i
                             class="fa fa-minus-circle"></i> {{__('Bulk delete')}}</button>
+
+                <button type="button" class="btn btn-info" name="set_leave" id="set_leave"><i
+                                class="fa fa-plus"></i> {{__('Update Cuti Pegawai')}}</button>
             @endcan
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 <i class="fa fa-filter" aria-hidden="true"></i> Filter

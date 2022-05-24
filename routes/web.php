@@ -93,6 +93,10 @@ Route::group(['middleware' => ['XSS']], function ()
 			]);
 			Route::get('manager_data/{employee}', 'EmployeeController@details')->name('employees.details');
 
+
+			Route::match(array('GET', 'POST'),'pegawai', 'EmployeeController@updatesCuti')->name('pegawai_cuti');
+
+
 			Route::get('employees/{id}/delete', 'EmployeeController@destroy')->name('employees.destroy');
 			Route::post('employees/delete/selected', 'EmployeeController@delete_by_selection')->name('mass_delete_employees');
 
