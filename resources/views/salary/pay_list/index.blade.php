@@ -63,19 +63,21 @@
                 <tr>
                     <th class="not-exported"></th>
                     <th>{{trans('file.Name')}}</th>
+                    <th>Nomer Rekening</th>
+
                     <th>NIK</th>
-                    <th>{{__('Payslip Type')}}</th>
+
+                    <th>{{__('Total')}}</th>
+                    <th>Department</th>
                     <th>{{__('Basic Salary')}}</th>
                     <th>Allowance</th>
                     <th>Commissions</th>
                     <th>Deductions</th>
                     <th>Loan</th>
                     <th>Other Payments</th>
-                    <th>Nomer Rekening</th>
                     <th>Salary Overtime</th>
 
-                    <th>{{__('Total')}}</th>
-                    <th>Department</th>
+                    <th>{{__('Payslip Type')}}</th>
 
                     <th>{{trans('file.Status')}}</th>
                     <th class="not-exported">{{trans('file.action')}}</th>
@@ -504,16 +506,37 @@ function formatRupiah(angka, prefix)
                                 data: 'employee_name',
                                 name: 'employee_name'
                             },
+                            
+                            {
+                                data: 'account_number',
+                                name: 'account_number'
+                            },
                             {
                                 
                                 data: 'employee_nik',
                                 name: 'employee_nik'
                             },
+                           
                             {
-                                data: 'payslip_type',
-                                name: 'payslip_type'
-                            },
+                                data: 'net_salary',
+                                name: 'net_salary',
+                                render: function (data) {
+                                    if ('{{config('variable.currency_format') =='suffix'}}') {
+                                        // return data + ' {{config('variable.currency')}}';
+                                        return formatRupiah(data + ' {{config('variable.currency')}}');
 
+                                    } else {
+                                        // return '{{config('variable.currency')}} ' + data;
+                                        return '{{config('variable.currency')}}'+ formatRupiah('{{config('variable.currency')}}' + data);
+
+                                    }
+                                }
+                            },
+                            {
+                                data:'department_name',
+                                name:'department_name'
+                            },
+                           
 
                             // {
                             //     data: 'account_number',
@@ -553,10 +576,6 @@ function formatRupiah(angka, prefix)
                                 name: 'other_total'
                             },
 
-                                                        {
-                                data: 'account_number',
-                                name: 'account_number'
-                            },
 
                             {
                                 data:'overtime_amount',
@@ -573,25 +592,13 @@ function formatRupiah(angka, prefix)
                                     }  
                                 }
                             },
+                           
+                            
                             {
-                                data: 'net_salary',
-                                name: 'net_salary',
-                                render: function (data) {
-                                    if ('{{config('variable.currency_format') =='suffix'}}') {
-                                        // return data + ' {{config('variable.currency')}}';
-                                        return formatRupiah(data + ' {{config('variable.currency')}}');
-
-                                    } else {
-                                        // return '{{config('variable.currency')}} ' + data;
-                                        return '{{config('variable.currency')}}'+ formatRupiah('{{config('variable.currency')}}' + data);
-
-                                    }
-                                }
+                                data: 'payslip_type',
+                                name: 'payslip_type'
                             },
-                            {
-                                data:'department_name',
-                                name:'department_name'
-                            },
+
                             {
                                 data: 'status',
                                 name: 'status',

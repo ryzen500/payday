@@ -86,14 +86,20 @@ class PayrollController extends Controller {
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
 						}, 'employeeBankAccount','department'])
-						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount')
+						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount','department_id','joining_date')
 						->where('company_id', $request->filter_company)
+						// ->where('department_id', $request->filter_department)
 						->where('department_id', $request->filter_department)
+
 						->whereIn('id',$salary_basic_employees)
 						->whereNotIn('id',$paid_employees)
+						->whereYear('joining_date', '<', date('Y'))
+
+
 						->get();
 
-				} elseif (!empty($request->filter_company))
+							// json_encode($employees);
+					} elseif (!empty($request->filter_company))
 				{
 					$employees = Employee::with(['salaryBasic' => function ($query)
 						{
@@ -131,10 +137,12 @@ class PayrollController extends Controller {
 						'employeeAttendance' => function ($query) use ($first_date, $last_date){
 							$query->whereBetween('attendance_date', [$first_date, $last_date]);
 						}, 'employeeBankAccount','department'])
-						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount','department_id')
+						->select('id', 'first_name', 'last_name', 'basic_salary', 'payslip_type','pension_type','pension_amount','department_id','joining_date')
 						->where('company_id', $request->filter_company)
 						->whereIn('id',$salary_basic_employees)
 						->whereNotIn('id',$paid_employees)
+						->whereYear('joining_date', '<', date('Y'))
+
 						->get();
 				} else
 				{
@@ -190,6 +198,7 @@ class PayrollController extends Controller {
 						->get();
 				}
 
+				// dd($employees);
 				return datatables()->of($employees)
 					->setRowId(function ($pay_list)
 					{
